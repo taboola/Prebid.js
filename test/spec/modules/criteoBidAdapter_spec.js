@@ -16,6 +16,11 @@ describe('The Criteo bidding adapter', function () {
   let utilsMock, sandbox;
 
   beforeEach(function () {
+    $$PREBID_GLOBAL$$.bidderSettings = {
+      criteo: {
+        storageAllowed: true
+      }
+    };
     // Remove FastBid to avoid side effects
     localStorage.removeItem('criteo_fast_bid');
     utilsMock = sinon.mock(utils);
@@ -23,7 +28,8 @@ describe('The Criteo bidding adapter', function () {
     sandbox = sinon.sandbox.create();
   });
 
-  afterEach(function () {
+  afterEach(function() {
+    $$PREBID_GLOBAL$$.bidderSettings = {};
     global.Criteo = undefined;
     utilsMock.restore();
     sandbox.restore();
@@ -925,19 +931,14 @@ describe('The Criteo bidding adapter', function () {
         },
       ];
 
-      sandbox.stub(config, 'getConfig').callsFake(key => {
-        const config = {
-        };
-        return utils.deepAccess(config, key);
-      });
-
-      const request = spec.buildRequests(bidRequests, bidderRequest);
+      const request = spec.buildRequests(bidRequests, {...bidderRequest, ortb2: {}});
       expect(request.data.publisher.ext).to.equal(undefined);
       expect(request.data.user.ext).to.equal(undefined);
       expect(request.data.slots[0].ext).to.equal(undefined);
     });
 
     it('should properly build a request with criteo specific ad unit first party data', function () {
+      // TODO: this test does not do what it says
       const bidRequests = [
         {
           bidder: 'criteo',
@@ -957,13 +958,7 @@ describe('The Criteo bidding adapter', function () {
         },
       ];
 
-      sandbox.stub(config, 'getConfig').callsFake(key => {
-        const config = {
-        };
-        return utils.deepAccess(config, key);
-      });
-
-      const request = spec.buildRequests(bidRequests, bidderRequest);
+      const request = spec.buildRequests(bidRequests, {...bidderRequest, ortb2: {}});
       expect(request.data.slots[0].ext).to.deep.equal({
         bidfloor: 0.75,
       });
@@ -1012,17 +1007,12 @@ describe('The Criteo bidding adapter', function () {
         },
       ];
 
-      sandbox.stub(config, 'getConfig').callsFake(key => {
-        const config = {
-          ortb2: {
-            site: siteData,
-            user: userData
-          }
-        };
-        return utils.deepAccess(config, key);
-      });
+      const ortb2 = {
+        site: siteData,
+        user: userData
+      };
 
-      const request = spec.buildRequests(bidRequests, bidderRequest);
+      const request = spec.buildRequests(bidRequests, {...bidderRequest, ortb2});
       expect(request.data.publisher.ext).to.deep.equal({ data: { pageType: 'article' } });
       expect(request.data.user.ext).to.deep.equal({ data: { registered: true } });
       expect(request.data.slots[0].ext).to.deep.equal({

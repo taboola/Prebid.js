@@ -92,7 +92,6 @@ export const spec = {
   gvlid: GVLID,
   aliases: [
     { code: 'appnexusAst', gvlid: 32 },
-    { code: 'brealtime' },
     { code: 'emxdigital', gvlid: 183 },
     { code: 'pagescience' },
     { code: 'defymedia' },
@@ -100,7 +99,6 @@ export const spec = {
     { code: 'matomy' },
     { code: 'featureforward' },
     { code: 'oftmedia' },
-    { code: 'districtm', gvlid: 144 },
     { code: 'adasta' },
     { code: 'beintoo', gvlid: 618 },
   ],
@@ -292,7 +290,6 @@ export const spec = {
     if (bidRequests[0].userId) {
       let eids = [];
 
-      addUserId(eids, deepAccess(bidRequests[0], `userId.flocId.id`), 'chrome.com', null);
       addUserId(eids, deepAccess(bidRequests[0], `userId.criteoId`), 'criteo.com', null);
       addUserId(eids, deepAccess(bidRequests[0], `userId.netId`), 'netid.de', null);
       addUserId(eids, deepAccess(bidRequests[0], `userId.idl_env`), 'liveramp.com', null);

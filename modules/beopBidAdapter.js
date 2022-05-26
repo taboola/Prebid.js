@@ -38,7 +38,7 @@ export const spec = {
   buildRequests: function(validBidRequests, bidderRequest) {
     const slots = validBidRequests.map(beOpRequestSlotsMaker);
     const pageUrl = getPageUrl(bidderRequest.refererInfo, window);
-    const fpd = config.getLegacyFpd(config.getConfig('ortb2'));
+    const fpd = config.getLegacyFpd(bidderRequest.ortb2);
     const gdpr = bidderRequest.gdprConsent;
     const firstSlot = slots[0];
     const payloadObject = {
