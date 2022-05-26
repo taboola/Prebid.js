@@ -126,7 +126,7 @@ export const spec = {
       regs.coppa = 1
     }
 
-    const ortb2 = config.getConfig('ortb2') || {
+    const ortb2 = config.getAnyConfig('ortb2') || {
       badv: [],
       bcat: []
     };
