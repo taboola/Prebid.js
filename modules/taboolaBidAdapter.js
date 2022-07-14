@@ -245,5 +245,4 @@ function getBid(requestId, currency, bidResponse) {
     netRevenue: false
   };
 }
-
 registerBidder(spec);
