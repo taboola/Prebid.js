@@ -38,7 +38,6 @@
   "devDependencies": {
     "@babel/eslint-parser": "^7.16.5",
     "@playwright/test": "^1.44.1",
-    "@types/node": "^20.12.12",
     "@wdio/browserstack-service": "^8.29.0",
     "@wdio/cli": "^8.29.0",
     "@wdio/concise-reporter": "^8.29.0",
